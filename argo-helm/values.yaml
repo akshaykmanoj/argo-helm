@@ -27,7 +27,7 @@ hpa:
 # Service Configuration
 service:
   name: argo-helm  # Replace with your service name
-  port: 80
+  port: 8001
   targetPort: http
   selectorApp: argo-helm  # Replace with your app label
   selectorRelease: RELEASE-NAME  # Replace with your release name
