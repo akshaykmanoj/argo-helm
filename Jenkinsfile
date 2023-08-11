@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-key', url: 'https://github.com/akshaykmanoj/argo-helm.git']])
+            }
+        }
+        stage('docker login build push and logout')  {
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'docker-key', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                    sh "echo $DOCKER_PASS | docker --debug login -u $DOCKER_USER --password-stdin"
+                    sh "docker build -t  akshaykmanoj/my-django-login:${env.BUILD_NUMBER} . "
+                    sh "docker push akshaykmanoj/my-django-login:${env.BUILD_NUMBER}"
+                    sh 'docker logout'
+                    sh "docker rmi akshaykmanoj/my-django-login:${env.BUILD_NUMBER}"
+                }
+            }
+        }
+
+        stage('replace image tag ') {
+            steps {
+                sh "sed -i 's|akshaykmanoj/my-django-login:latest|akshaykmanoj/my-django-login:${env.BUILD_NUMBER}|g' deployment.yaml"
+                //sh "sed -i 's|akshaykmanoj/my-django-login:latest|akshaykmanoj/my-django-login:${env.BUILD_NUMBER}|g' ./argo-helm/values.yaml"
+            }
+        }
+        stage('helm package ') {
+            steps {
+                sh 'helm package argo-helm'
+            }
+        } 
+        stage('Logging into AWS ECR & push helm chart to ecr') {
+            steps {
+                script {
+                 withCredentials([aws(credentialsId: 'aws-key', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {   
+                    sh 'aws ecr get-login-password --region us-east-1 | helm registry login --username AWS --password-stdin 409486179793.dkr.ecr.us-east-1.amazonaws.com'  
+                     //sh 'aws ecr create-repository --repository-name agro-helm --region us-east-1'
+                    sh 'helm push  agro-helm-0.1.0.tgz oci://409486179793.dkr.ecr.us-east-1.amazonaws.com'
+                }
+            }
+        }
+    } 
+}
+}

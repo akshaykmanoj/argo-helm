@@ -1,0 +1,30 @@
+replicaCount: 1
+image:
+  repository: akshaykmanoj/my-django-login
+  tag: latest
+  pullPolicy: IfNotPresent
+resources: {}
+nodeSelector: {}
+affinity: {}
+tolerations: {}
+
+# Blue-Green Deployment Configuration
+blueGreen:
+  activeService: argo-helm  # Replace with your active service name
+  previewService: argo-helm-preview  # Replace with your preview service name
+
+# Horizontal Pod Autoscaler Configuration
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10  # Set your desired max replicas
+  targetCPUUtilizationPercentage: 50  # Set your desired average CPU utilization
+
+# Service Configuration
+service:
+  name: argo-helm  # Replace with your service name
+  port: 80
+  targetPort: http
+  selectorApp: argo-helm  # Replace with your app label
+  selectorRelease: RELEASE-NAME  # Replace with your release name
+  selectorVersion: green  # Change to blue for blue deployment
