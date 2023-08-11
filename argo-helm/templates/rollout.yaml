@@ -4,16 +4,12 @@ metadata:
   name: {{ template "argo-helm.fullname" . }}
   labels:
     app: {{ template "argo-helm.name" . }}
-    chart: {{ template "argo-helm.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: {{ template "argo-helm.name" . }}
-      release: {{ .Release.Name }}
       version: green  # Change this to blue when doing blue deployment
   strategy:
     blueGreen:
@@ -24,7 +20,6 @@ spec:
     metadata:
       labels:
         app: {{ template "argo-helm.name" . }}
-        release: {{ .Release.Name }}
         version: green  # Change this to blue when doing blue deployment
     spec:
       containers:
