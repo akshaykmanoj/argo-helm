@@ -19,7 +19,7 @@ blueGreen:
 
 # Horizontal Pod Autoscaler Configuration
 hpa:
-  enabled: true
+  enabled: false
   minReplicas: 1
   maxReplicas: 10  # Set your desired max replicas
   targetCPUUtilizationPercentage: 50  # Set your desired average CPU utilization
