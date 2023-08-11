@@ -13,8 +13,8 @@ spec:
       version: green  # Change this to blue when doing blue deployment
   # strategy:
   #   blueGreen:
-  #     activeService: {{ template "argo-helm.fullname" . }}
-  #     previewService: {{ template "argo-helm.fullname" . }}-preview
+  #     activeService: {{ template "argo-helm" . }}
+  #     previewService: {{ template "argo-helm" . }}-preview
   #     autoPromotionEnabled: false
   template:
     metadata:
