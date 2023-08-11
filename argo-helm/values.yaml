@@ -27,8 +27,10 @@ hpa:
 # Service Configuration
 service:
   name: argo-helm  # Replace with your service name
-  port: 8001
+  type: Nodeport
+  port: 80
   targetPort: http
   selectorApp: argo-helm  # Replace with your app label
-  selectorRelease: RELEASE-NAME  # Replace with your release name
-  selectorVersion: green  # Change to blue for blue deployment
+  selectorRelease: my-argo-release  # Replace with your release name
+  selectorVersion1: green  # Change to blue for blue deployment
+  selectorVersion2: blue  # Change to blue for blue deployment
