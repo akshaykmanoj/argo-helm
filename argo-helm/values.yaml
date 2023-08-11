@@ -23,6 +23,13 @@ hpa:
   minReplicas: 1
   maxReplicas: 10  # Set your desired max replicas
   targetCPUUtilizationPercentage: 50  # Set your desired average CPU utilization
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50 
 
 # Service Configuration
 service:
