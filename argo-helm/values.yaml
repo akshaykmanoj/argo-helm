@@ -15,7 +15,7 @@ ingress:
 # Blue-Green Deployment Configuration
 blueGreen:
   activeService: argo-helm  # Replace with your active service name
-  previewService: argo-helm  # Replace with your preview service name
+  previewService: argo-helm-preview  # Replace with your preview service name
 
 # Horizontal Pod Autoscaler Configuration
 hpa:
