@@ -32,5 +32,4 @@ service:
   targetPort: http
   selectorApp: argo-helm  # Replace with your app label
   selectorRelease: my-argo-release  # Replace with your release name
-  selectorVersion1: green  # Change to blue for blue deployment
-  selectorVersion2: blue  # Change to blue for blue deployment
+  selectorVersion: green  # Change to blue for blue deployment
