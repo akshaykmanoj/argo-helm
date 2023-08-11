@@ -19,6 +19,7 @@ spec:
     blueGreen:
       activeService: {{ template "argo-helm.fullname" . }}
       previewService: {{ template "argo-helm.fullname" . }}-preview
+      autoPromotionEnabled: false
   template:
     metadata:
       labels:
