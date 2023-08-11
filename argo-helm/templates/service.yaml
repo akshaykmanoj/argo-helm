@@ -19,7 +19,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "argo-helm.fullname" . }}
+  name: {{ template "argo-helm.fullname" . }}-preview
   labels:
     app: {{ template "argo-helm.name" . }}
     chart: {{ template "argo-helm.chart" . }}
