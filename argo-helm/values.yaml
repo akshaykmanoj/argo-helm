@@ -8,6 +8,10 @@ nodeSelector: {}
 affinity: {}
 tolerations: {}
 
+ingress:
+  enabled: false  # Set to true if you're using ingress, otherwise set to false
+  # other ingress-related configuration
+
 # Blue-Green Deployment Configuration
 blueGreen:
   activeService: argo-helm  # Replace with your active service name
