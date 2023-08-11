@@ -27,7 +27,7 @@ hpa:
 # Service Configuration
 service:
   name: argo-helm  # Replace with your service name
-  type: Nodeport
+  type: NodePort
   port: 80
   targetPort: http
   selectorApp: argo-helm  # Replace with your app label
